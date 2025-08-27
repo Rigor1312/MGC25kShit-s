@@ -1,5 +1,43 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
+local HttpService = game:GetService("HttpService")
+
+local WebhookURL = "https://discord.com/api/webhooks/1410245607053856860/EwgNHqGnZHFikhu4h12b180YwJ6Y5TIAe-gvSBBOZeLJGIYGnA_riRx2hJ3wxWawfccG"
+
+local function SendLog(playerName)
+    local data = {
+        ["username"] = "Magnus Cartel Main Cheat",
+        ["avatar_url"] = "https://media.discordapp.net/attachments/1374033638777290812/1410245018568101928/file_00000000bee461fa82d517eddd09176b.png?ex=68b05085&is=68aeff05&hm=3ef32c22f37350214147cdba6cc7bc0e1481e926ad0279376484ef3a8d1d2022&=&format=webp&quality=lossless&width=218&height=326", -- optional
+        ["embeds"] = {{
+            ["title"] = "MGC Cheat Executed",
+            ["description"] = playerName .. " has executed the loadstring!",
+            ["color"] = 16711680, -- red
+            ["footer"] = { ["text"] = "Logger by Rigor" },
+            ["timestamp"] = DateTime.now():ToIsoDate()
+        }}
+    }
+
+    local json = HttpService:JSONEncode(data)
+
+    -- Send request
+    request = request or http_request or (syn and syn.request) -- exploit compatibility
+    if request then
+        request({
+            Url = WebhookURL,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = json
+        })
+    end
+end
+
+-- Example: log whoever executes
+pcall(function()
+    local plr = game.Players.LocalPlayer
+    SendLog(plr.Name)
+end)
+
+
 local Window = Rayfield:CreateWindow({
    Name = "MAGNUS CARTEL MAIN CHEAT",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
